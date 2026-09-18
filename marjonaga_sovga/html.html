@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Otabek va Marjona - To'y Taklifnomasi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #8b1e2c;
+            font-family: 'Montserrat', sans-serif;
+            color: #4a151b;
+            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Telefon ekranini simulyatsiya qiluvchi konteyner */
+        .wrapper {
+            width: 100%;
+            max-width: 450px;
+            min-height: 100vh;
+            background: #fdfbf7;
+            position: relative;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+            overflow: hidden;
+        }
+
+        /* 1-OYNA: Konvert va Ochish ekrani */
+        .welcome-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #8b1e2c 0%, #60121d 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+            color: #fff;
+            z-index: 10;
+            padding: 40px 20px;
+            transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.8s ease;
+        }
+
+        .welcome-screen.hidden {
+            transform: translateY(-100%);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .top-controls {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .music-toggle {
+            background: #f3e5c8;
+            border: 1px solid #dfbc73;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .envelope-center-content {
+            margin: auto 0;
+        }
+
+        .sub-text {
+            font-size: 12px;
+            letter-spacing: 4px;
+            color: #f3e5c8;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .main-title {
+            font-size: 32px;
+            font-weight: 500;
+            line-height: 1.2;
+            color: #fff;
+            margin-bottom: 25px;
+        }
+
+        .main-title span {
+            font-family: 'Great Vibes', cursive;
+            font-size: 52px;
+            color: #f3e5c8;
+            font-weight: normal;
+        }
+
+        .open-btn {
+            background: radial-gradient(circle, #fcebc4 0%, #d4af37 70%, #aa8228 100%);
+            border: 2px solid #fff;
+            color: #3b2302;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 13px;
+            letter-spacing: 2px;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+            transition: transform 0.2s;
+        }
+
+        .open-btn:active {
+            transform: scale(0.92);
+        }
+
+        .envelope-footer {
+            font-size: 11px;
+            color: #f3e5c8;
+            letter-spacing: 2px;
+            line-height: 1.5;
+        }
+
+        /* 2-OYNA: Asosiy Taklifnoma Sahifasi */
+        .main-content {
+            padding: 30px 20px;
+            opacity: 0;
+            transition: opacity 0.5s ease 0.5s;
+        }
+
+        .main-content.show {
+            opacity: 1;
+        }
+
+        /* SCROLL ANIMATSIYA: Elementlar pastdan silliq chiqib kelishi */
+        .reveal-item {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal-item.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Bloklar dizayni */
+        .header-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header-section h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 48px;
+            color: #8b1e2c;
+            line-height: 1.1;
+        }
+
+        .header-section .va {
+            font-family: 'Great Vibes', cursive;
+            font-size: 30px;
+            color: #8b1e2c;
+            margin: -5px 0;
+            display: block;
+        }
+
+        .photo-frame {
+            width: 100%;
+            height: 320px;
+            border-radius: 15px;
+            background: #eee url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80') center/cover no-repeat;
+            margin: 20px 0;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .scroll-hint {
+            text-align: center;
+            font-size: 10px;
+            letter-spacing: 3px;
+            color: #8b1e2c;
+            margin-top: 15px;
+            animation: bounce 1.5s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(6px); }
+            60% { transform: translateY(3px); }
+        }
+
+        .card-box {
+            background-color: #8b1e2c;
+            color: #fff;
+            padding: 30px 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 25px rgba(139, 30, 44, 0.2);
+        }
+
+        .card-box h3 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 36px;
+            color: #f3e5c8;
+            margin-bottom: 15px;
+        }
+
+        .card-box p {
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .calendar-box {
+            text-align: center;
+            margin-bottom: 30px;
+            background: #fff;
+            padding: 25px 15px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .calendar-box h3 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 34px;
+            color: #8b1e2c;
+            margin-bottom: 15px;
+        }
+
+        .calendar-table {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .calendar-table span {
+            padding: 8px 0;
+        }
+
+        .calendar-table .day-muted {
+            color: #ccc;
+        }
+
+        .calendar-table .active-day {
+            background: #dfbc73;
+            color: #fff;
+            border-radius: 50%;
+            font-weight: bold;
+        }
+
+        .location-box {
+            text-align: center;
+            background: #fff;
+            padding: 30px 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .location-box h3 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 36px;
+            color: #8b1e2c;
+            margin-bottom: 10px;
+        }
+
+        .location-box h4 {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .location-box p {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .map-btn {
+            display: block;
+            width: 100%;
+            background: #8b1e2c;
+            color: #fff;
+            text-decoration: none;
+            padding: 12px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 12px;
+            letter-spacing: 1px;
+            margin-top: 10px;
+            box-shadow: 0 4px 10px rgba(139, 30, 44, 0.3);
+            transition: background 0.2s;
+        }
+
+        .map-btn:hover {
+            background: #60121d;
+        }
+
+        .countdown-box {
+            text-align: center;
+            background: #fff;
+            padding: 30px 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .countdown-box h3 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 32px;
+            color: #8b1e2c;
+            margin-bottom: 20px;
+        }
+
+        .timers {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            font-size: 22px;
+            font-weight: bold;
+            color: #8b1e2c;
+            margin-bottom: 15px;
+        }
+
+        .timers div span {
+            font-size: 10px;
+            color: #888;
+            display: block;
+            font-weight: normal;
+            text-transform: uppercase;
+        }
+
+        .footer-logo {
+            text-align: center;
+            font-size: 10px;
+            letter-spacing: 3px;
+            color: #aaa;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="wrapper">
+        <!-- 1-OYNA: Konvert -->
+        <div id="welcomeScreen" class="welcome-screen">
+            <div class="top-controls">
+                <button id="musicBtn" class="music-toggle">🎵</button>
+               <audio id="bgMusic" loop>
+    <source src="music/2_5422630007744782565.mp3" type="audio/mpeg">
+</audio>
+            </div>
+            
+            <div class="envelope-center-content">
+                <span class="sub-text">SIZ TO'YIMIZGA</span>
+                <h1 class="main-title">TAKlif<br><span>etilgansiz</span></h1>
+                
+                <button id="openBtn" class="open-btn">OCHISH</button>
+            </div>
+
+            <div class="envelope-footer">
+                MUHABBAT ILA,<br><strong>Otabek & Marjona</strong>
+            </div>
+        </div>
+
+        <!-- 2-OYNA: Asosiy Sahifa -->
+        <div id="mainContent" class="main-content">
+            
+            <div class="header-section reveal-item">
+                <span style="font-size: 11px; letter-spacing: 3px; color: #8b1e2c; display: block; margin-bottom: 10px;">NIKOH TO'YI</span>
+                <h1>Otabek</h1>
+                <span class="va">va</span>
+                <h1>Marjona</h1>
+                
+                <div class="photo-frame"></div>
+                
+                <div class="scroll-hint">
+                    PASTGA TUSHURING ↓
+                </div>
+            </div>
+
+            <div class="card-box reveal-item">
+                <h3>Aziz mehmonimiz!</h3>
+                <p>Hayotimizdagi eng quvonchli va unutilmas kunda qadrli mehmonimiz bo'lishingizni samimiy niyat qildik.</p>
+                <p>Sizni nikoh to'yimiz tantanasiga bag'ishlangan oqshomimizda ko'rishdan mamnun bo'lamiz.</p>
+            </div>
+
+            <div class="calendar-box reveal-item">
+                <h3>Aktryabr, 2026</h3>
+                <div class="calendar-table" style="color: #888; margin-bottom: 10px; font-size: 11px;">
+                    <span>DU</span><span>SE</span><span>CHOR</span><span>PAY</span><span>JU</span><span>SHA</span><span>YA</span>
+                </div>
+                <div class="calendar-table">
+                    <span class="day-muted">28</span><span>29</span><span>30</span><span>1</span><span>2</span><span class="day-muted">3</span>
+                    <span class="day-muted">4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span class="day-muted">10</span>  
+                    <span class="day-muted">11</span><span >12</span><span>13</span><span>14</span><span>15</span><span>16</span>
+                    <span class="day-muted">17</span><span class="active-day">18</span><span>19</span><span>20</span><span>21</span><span>22</span><span>23</span>
+                    <span class="day-muted">24</span><span class="day-muted">25</span><span>26</span><span>27</span><span>28</span><span>29</span><span>30</span><span class="day-muted">31</span><span class="day-muted">1</span>
+                </div>
+            </div>
+
+            <div class="location-box reveal-item">
+                <h3>To'y Manzili</h3>
+                <h4>Marjona Toyxonasi</h4>
+                
+                <a href="https://www.google.com/maps/place/41%C2%B018'36.1%22N+61%C2%B005'49.5%22E/@41.31002,61.0944951,17z/data=!3m1!4b1!4m4!3m3!8m2!3d41.31002!4d61.09707?entry=ttu&g_ep=EgoyMDI2MDkxNS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="map-btn" style="background: #333;">GOOGLE MAPS</a>  </div>
+
+            <div class="countdown-box reveal-item">
+                <h3>To'ygacha qoldi</h3>
+                <div class="timers">
+                    <div><b id="d">30</b><span>Kun</span></div> :
+                    <div><b id="h">12</b><span>Soat</span></div> :
+                    <div><b id="m">45</b><span>Daqiqa</span></div> :
+                    <div><b id="s">30</b><span>Soniya</span></div>
+                </div>
+                <p style="font-size: 13px; color: #555;">Sizni intizorlik bilan kutamiz!</p><br><br>
+                   <p style="font-size: 13px; color: #555;">11A Usmonov Izzatbek tomonidan yaratildi</p>
+            </div>
+
+           
+
+        </div>
+    </div>
+
+    <!-- Fon musiqasi uchun audio (xohlasangiz o'z linkizni qo'ying) -->
+    <audio id="bgMusic" loop>
+        <source src="https://www.bensound.com/bensound-music/bensound-tenderness.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        const openBtn = document.getElementById('openBtn');
+        const welcomeScreen = document.getElementById('welcomeScreen');
+        const mainContent = document.getElementById('mainContent');
+        const musicBtn = document.getElementById('musicBtn');
+        const bgMusic = document.getElementById('bgMusic');
+        
+        let isPlaying = false;
+
+        // Musiqani yoqish/o'chirish
+        musicBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                bgMusic.pause();
+                musicBtn.style.opacity = "0.5";
+            } else {
+                bgMusic.play().catch(e => console.log(e));
+                musicBtn.style.opacity = "1";
+            }
+            isPlaying = !isPlaying;
+        });
+
+        // "OCHISH" tugmasi bosilganda
+        openBtn.addEventListener('click', () => {
+            welcomeScreen.classList.add('hidden');
+            mainContent.classList.add('show');
+            
+            // Musiqani avtomatik ishga tushirishga urinish
+            bgMusic.play().then(() => {
+                isPlaying = true;
+                musicBtn.style.opacity = "1";
+            }).catch(e => console.log("Avtomatik musiqa bloklandi"));
+
+            // Birinchi animatsiyalarni faollashtirish
+            triggerAnimations();
+        });
+
+        // Scroll qilinganda elementlarni pastdan chiqarish animatsiyasi
+        const revealItems = document.querySelectorAll('.reveal-item');
+
+        function triggerAnimations() {
+            const triggerBottom = window.innerHeight * 0.9;
+            revealItems.forEach(item => {
+                const itemTop = item.getBoundingClientRect().top;
+                if (itemTop < triggerBottom) {
+                    item.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', triggerAnimations);
+        window.addEventListener('resize', triggerAnimations);
+
+        // Taymer (Countdown)
+       const weddingDate = new Date(2026, 9, 18, 14, 0, 0).getTime();
+
+        setInterval(() => {
+            const now = new Date().getTime();
+            const diff = weddingDate - now;
+
+            if (diff > 0) {
+                document.getElementById('d').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+                document.getElementById('h').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                document.getElementById('m').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                document.getElementById('s').innerText = Math.floor((diff % (1000 * 60)) / 1000);
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
